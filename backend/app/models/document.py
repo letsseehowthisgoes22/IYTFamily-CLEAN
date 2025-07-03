@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Text, Integer, Boolean, DateTime, ForeignKey
+from sqlalchemy import Column, String, Text, Integer, Boolean, DateTime, ForeignKey, JSON
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
@@ -17,7 +17,7 @@ class Document(Base):
     mime_type = Column(String(100), nullable=True)
     document_type = Column(String(50), nullable=True)
     is_encrypted = Column(Boolean, default=True)
-    access_permissions = Column(Text, default="[]")
+    access_permissions = Column(JSON, default=list)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     trip = relationship("Trip", back_populates="documents")
