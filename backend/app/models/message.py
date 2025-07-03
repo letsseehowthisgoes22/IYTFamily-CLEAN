@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Text, Boolean, DateTime, ForeignKey, Enum
+from sqlalchemy import Column, String, Text, Boolean, DateTime, ForeignKey, Enum, JSON
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
@@ -21,7 +21,7 @@ class Message(Base):
     content = Column(Text, nullable=False)
     message_type = Column(Enum(MessageType), nullable=False, default=MessageType.TEXT)
     is_encrypted = Column(Boolean, default=True)
-    read_by = Column(Text, default="[]")
+    read_by = Column(JSON, default=list)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     trip = relationship("Trip", back_populates="messages")
